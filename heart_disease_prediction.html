@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Prediction</title>
+</head>
+<body>
+    <h1>Heart Disease Prediction</h1>
+    <label for="age">Age:</label><br>
+    <input type="text" id="age" name="age"><br>
+    
+    <label for="sex">Sex (0 = Female, 1 = Male):</label><br>
+    <input type="text" id="sex" name="sex"><br>
+    
+    <label for="cp">Chest Pain Type (0-3):</label><br>
+    <input type="text" id="cp" name="cp"><br>
+    
+    <label for="trestbps">Resting Blood Pressure:</label><br>
+    <input type="text" id="trestbps" name="trestbps"><br>
+    
+    <label for="chol">Cholesterol:</label><br>
+    <input type="text" id="chol" name="chol"><br>
+    
+    <label for="fbs">Fasting Blood Sugar (> 120 mg/dl) (0 = No, 1 = Yes):</label><br>
+    <input type="text" id="fbs" name="fbs"><br>
+    
+    <label for="restecg">Resting Electrocardiographic Results (0-2):</label><br>
+    <input type="text" id="restecg" name="restecg"><br>
+    
+    <label for="thalach">Maximum Heart Rate Achieved:</label><br>
+    <input type="text" id="thalach" name="thalach"><br>
+    
+    <label for="exang">Exercise Induced Angina (0 = No, 1 = Yes):</label><br>
+    <input type="text" id="exang" name="exang"><br>
+    
+    <label for="oldpeak">ST Depression Induced by Exercise Relative to Rest:</label><br>
+    <input type="text" id="oldpeak" name="oldpeak"><br>
+    
+    <label for="slope">Slope of the Peak Exercise ST Segment (0-2):</label><br>
+    <input type="text" id="slope" name="slope"><br>
+    
+    <label for="ca">Number of Major Vessels (0-3) Colored by Fluoroscopy:</label><br>
+    <input type="text" id="ca" name="ca"><br>
+    
+    <label for="thal">Thalassemia (0-3):</label><br>
+    <input type="text" id="thal" name="thal"><br>
+    
+    <button onclick="predict()">Predict</button>
+    <p id="result"></p>
+
+    <script>
+        function predict() {
+            var age = document.getElementById("age").value;
+            var sex = document.getElementById("sex").value;
+            var cp = document.getElementById("cp").value;
+            var trestbps = document.getElementById("trestbps").value;
+            var chol = document.getElementById("chol").value;
+            var fbs = document.getElementById("fbs").value;
+            var restecg = document.getElementById("restecg").value;
+            var thalach = document.getElementById("thalach").value;
+            var exang = document.getElementById("exang").value;
+            var oldpeak = document.getElementById("oldpeak").value;
+            var slope = document.getElementById("slope").value;
+            var ca = document.getElementById("ca").value;
+            var thal = document.getElementById("thal").value;
+            
+            // Send data to backend for prediction
+            fetch('https://your-backend-url/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    age: age,
+                    sex: sex,
+                    cp: cp,
+                    trestbps: trestbps,
+                    chol: chol,
+                    fbs: fbs,
+                    restecg: restecg,
+                    thalach: thalach,
+                    exang: exang,
+                    oldpeak: oldpeak,
+                    slope: slope,
+                    ca: ca,
+                    thal: thal
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display prediction result
+                document.getElementById("result").innerText = data;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
